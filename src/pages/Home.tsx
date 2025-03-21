@@ -2,7 +2,10 @@ import SearchInput from "@/components/SearchInput";
 import Content from "./layouts/Content";
 import { Flex, SimpleGrid } from "@chakra-ui/react";
 import CharacterCard from "@/components/CharacterCard";
+import Pagination from "@/components/Pagination";
 
+// Página principal onde se encontra grande parte
+// do conteúdo da aplicação
 export default function Home() {
   return (
     <Flex
@@ -103,6 +106,8 @@ export default function Home() {
           />
         </SimpleGrid>
       </Content>
+
+      <Pagination />
     </Flex>
   );
 }
