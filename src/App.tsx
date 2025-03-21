@@ -1,7 +1,14 @@
+import { Route, Routes } from "react-router";
+import Home from "@/pages/Home";
+import PageNotFound from "@/pages/PageNotFound";
+
 export default function App() {
   return (
-    <div>
-      <h1>Rick And Morty UI</h1>
-    </div>
+    <>
+      <Routes>
+        <Route index path="/" element={<Home />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </>
   );
 }
