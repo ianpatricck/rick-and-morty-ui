@@ -19,7 +19,7 @@ export default function Home() {
           <SearchInput />
         </Flex>
 
-        <SimpleGrid columns={4} gap="5px">
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap="5px">
           <CharacterCard
             image="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
             name="Rick Sanchez"
