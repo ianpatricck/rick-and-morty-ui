@@ -6,6 +6,7 @@ import Pagination from "@/components/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/services/api";
 import { CharacterSchema } from "@/schemas/CharacterSchema";
+import { Link } from "react-router";
 
 // Página principal onde se encontra grande parte
 // do conteúdo da aplicação
@@ -53,14 +54,15 @@ export default function Home() {
             <>
               {characters?.results.map(
                 (character: CharacterSchema, key: number) => (
-                  <CharacterCard
-                    image={character.image}
-                    name={character.name}
-                    status={character.status}
-                    species={character.species}
-                    gender={character.gender}
-                    key={key}
-                  />
+                  <Link to={"/character/" + character.id} key={key}>
+                    <CharacterCard
+                      image={character.image}
+                      name={character.name}
+                      status={character.status}
+                      species={character.species}
+                      gender={character.gender}
+                    />
+                  </Link>
                 ),
               )}
             </>
