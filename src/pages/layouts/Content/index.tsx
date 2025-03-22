@@ -5,7 +5,7 @@ type ContentProps = {
   children: ReactNode;
 };
 
-// Componente que encapsula o conteúdo principal da página 'Home'
+// Componente que encapsula o conteúdo principal das páginas
 export default function Content({ children }: ContentProps) {
   return (
     <Container maxW="80vw" backgroundColor="red">
