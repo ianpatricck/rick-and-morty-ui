@@ -8,7 +8,7 @@ export type CharacterSchema = {
   origin: object;
   location: object;
   image: string;
-  epsode: Array<string>;
+  episode: Array<string>;
   url: string;
   created: string;
 };
