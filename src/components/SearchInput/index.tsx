@@ -10,7 +10,7 @@ export default function SearchInput(props: InputProps) {
           placeholder=""
           {...props}
         />
-        <Field.Label css={floatingStyles} fontSize={{ base: "10pt", sm: "sm" }}>
+        <Field.Label css={floatingStyles} fontSize={{ base: "10pt", sm: "sm", md: "md" }}>
           Search characters
         </Field.Label>
       </Group>
