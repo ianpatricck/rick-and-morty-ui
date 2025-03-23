@@ -56,9 +56,14 @@ export default function Character() {
                     base: "150px",
                     sm: "200px",
                     md: "300px",
-                    lg: "350px",
+                    lg: "300px",
                   }}
-                  width={{ base: "150px", sm: "200px", md: "300px" }}
+                  width={{
+                    base: "150px",
+                    sm: "200px",
+                    md: "300px",
+                    lg: "300px",
+                  }}
                   rounded={{ base: "full" }}
                   roundedTopRight={{ md: "none" }}
                   roundedBottomRight={{ md: "none" }}
