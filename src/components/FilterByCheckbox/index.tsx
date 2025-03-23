@@ -14,6 +14,7 @@ type FilterByCheckboxProps = {
   setStates: {
     setCheckedStatus: Dispatch<SetStateAction<string[]>>;
     setCheckedGender: Dispatch<SetStateAction<string[]>>;
+    setPage: Dispatch<SetStateAction<number>>;
   };
 };
 
@@ -57,6 +58,7 @@ export default function FilterByCheckbox({
                       states.checkedStatus.includes(status.value) ? true : false
                     }
                     onCheckedChange={(e) => {
+                      setStates.setPage(1);
                       if (e.checked) {
                         setStates.setCheckedStatus((prev) => [
                           ...prev,
@@ -101,6 +103,7 @@ export default function FilterByCheckbox({
                       states.checkedGender.includes(gender.value) ? true : false
                     }
                     onCheckedChange={(e) => {
+                      setStates.setPage(1);
                       if (e.checked) {
                         setStates.setCheckedGender((prev) => [
                           ...prev,
