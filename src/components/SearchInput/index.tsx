@@ -5,8 +5,14 @@ export default function SearchInput(props: InputProps) {
   return (
     <Field.Root w="2xl" backgroundColor="pink">
       <Group attached w="full">
-        <Input className="peer" placeholder="" {...props} />
-        <Field.Label css={floatingStyles}>Buscar personagem</Field.Label>
+        <Input
+          className="peer"
+          placeholder=""
+          {...props}
+        />
+        <Field.Label css={floatingStyles} fontSize={{ base: "10pt", sm: "sm" }}>
+          Search characters
+        </Field.Label>
       </Group>
     </Field.Root>
   );
