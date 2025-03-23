@@ -7,12 +7,26 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/services/api";
 import { CharacterSchema } from "@/schemas/CharacterSchema";
 import { Link } from "react-router";
-import { useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
+import { debounce } from "lodash";
 
 // Página principal onde se encontra grande parte
 // do conteúdo da aplicação
 export default function Home() {
+  // Página atual
   const [page, setPage] = useState<number>(1);
+
+  // Estado de armazenamento do personagem a se buscar.
+  const [searchCharacter, setSearchCharacter] = useState<string>("");
+
+  // Adicionando o debounce ao digitar o nome do personagem
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      setPage(1);
+      setSearchCharacter(query);
+    }, 500),
+    [],
+  );
 
   // Utiliza o react-query para fazer uma requisição à API.
   const {
@@ -21,10 +35,24 @@ export default function Home() {
     data: characters,
     isFetching,
   } = useQuery({
-    queryKey: ["characters", page],
-    queryFn: () => fetchData("/character?page=" + page),
+    queryKey: ["characters", page, searchCharacter],
+    queryFn: async () => {
+      if (!!searchCharacter.trim()) {
+        return await fetchData(
+          `/character?name=${searchCharacter}&page=${page}`,
+        );
+      }
+
+      return await fetchData(`/character/?page=${page}`);
+    },
+    enabled: true,
     placeholderData: keepPreviousData,
   });
+
+  // Atualizando a busca com o debounce
+  const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(e.target.value);
+  };
 
   return (
     <Flex
@@ -36,7 +64,7 @@ export default function Home() {
       {/*Armazena todo o conteúdo da Home*/}
       <Content>
         <Flex backgroundColor="green" justifyContent="center" padding={2}>
-          <SearchInput />
+          <SearchInput onChange={handleSearchInput} />
         </Flex>
 
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap="5px">
@@ -53,7 +81,7 @@ export default function Home() {
             </>
           ) : isError ? (
             <Heading textAlign="center" margin={4}>
-              Erro ao buscar parsonagens
+              Personagens não foram encontrados.
             </Heading>
           ) : (
             <>
