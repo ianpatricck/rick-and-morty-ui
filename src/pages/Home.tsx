@@ -9,7 +9,8 @@ import { CharacterSchema } from "@/schemas/CharacterSchema";
 import { Link } from "react-router";
 import { ChangeEvent, useCallback, useState } from "react";
 import { debounce } from "lodash";
-import FilterInput from "@/components/FilterInput";
+import FilterByCheckbox from "@/components/FilterByCheckbox";
+import { formatSearchCharactersQuery } from "@/utils/formatSearchCharactersQuery";
 
 // Página principal onde se encontra grande parte
 // do conteúdo da aplicação
@@ -29,6 +30,10 @@ export default function Home() {
     [],
   );
 
+  // Armazena os estados dos filtros para busca
+  const [checkedStatus, setCheckedStatus] = useState<Array<string>>([]);
+  const [checkedGender, setCheckedGender] = useState<Array<string>>([]);
+
   // Utiliza o react-query para fazer uma requisição à API.
   const {
     isPending,
@@ -36,15 +41,23 @@ export default function Home() {
     data: characters,
     isFetching,
   } = useQuery({
-    queryKey: ["characters", page, searchCharacter],
+    queryKey: [
+      "characters",
+      page,
+      searchCharacter,
+      checkedStatus,
+      checkedGender,
+    ],
     queryFn: async () => {
-      if (!!searchCharacter.trim()) {
-        return await fetchData(
-          `/character?name=${searchCharacter}&page=${page}`,
-        );
-      }
+      const query = formatSearchCharactersQuery({
+        path: "/character",
+        page: page,
+        character: searchCharacter,
+        status: checkedStatus,
+        gender: checkedGender,
+      });
 
-      return await fetchData(`/character/?page=${page}`);
+      return await fetchData(query);
     },
     enabled: true,
     placeholderData: keepPreviousData,
@@ -69,7 +82,21 @@ export default function Home() {
         </Flex>
 
         <Flex backgroundColor="salmon" justifyContent="center" padding={2}>
-          <FilterInput />
+          <FilterByCheckbox
+            statusList={[
+              { index: "alive", value: "Alive" },
+              { index: "dead", value: "Dead" },
+              { index: "unknown", value: "Unknown" },
+            ]}
+            genderList={[
+              { index: "female", value: "Female" },
+              { index: "male", value: "Male" },
+              { index: "genderless", value: "Genderless" },
+              { index: "unknown", value: "Unknown" },
+            ]}
+            states={{ checkedStatus, checkedGender }}
+            setStates={{ setCheckedStatus, setCheckedGender, setPage }}
+          />
         </Flex>
 
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap="5px">
@@ -85,8 +112,8 @@ export default function Home() {
               )}
             </>
           ) : isError ? (
-            <Heading textAlign="center" margin={4}>
-              Personagens não foram encontrados.
+            <Heading margin={4} background="gray">
+              Personagens não encontrados.
             </Heading>
           ) : (
             <>
