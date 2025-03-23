@@ -14,7 +14,6 @@ export const fetchData = async (endpoint: string) => {
     const response = await api.get(endpoint);
     return response.data;
   } catch (error) {
-    console.error("Erro ao buscar dados:", error);
     throw error;
   }
 };
