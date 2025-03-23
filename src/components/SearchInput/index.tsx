@@ -1,11 +1,4 @@
-import {
-  Button,
-  defineStyle,
-  Field,
-  Group,
-  Input,
-  InputProps,
-} from "@chakra-ui/react";
+import { defineStyle, Field, Group, Input, InputProps } from "@chakra-ui/react";
 
 // Campo de busca dos personagens
 export default function SearchInput(props: InputProps) {
@@ -14,9 +7,6 @@ export default function SearchInput(props: InputProps) {
       <Group attached w="full">
         <Input className="peer" placeholder="" {...props} />
         <Field.Label css={floatingStyles}>Buscar personagem</Field.Label>
-        <Button bg="bg.subtle" variant="outline">
-          Submit
-        </Button>
       </Group>
     </Field.Root>
   );
