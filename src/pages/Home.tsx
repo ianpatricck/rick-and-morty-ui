@@ -9,6 +9,7 @@ import { CharacterSchema } from "@/schemas/CharacterSchema";
 import { Link } from "react-router";
 import { ChangeEvent, useCallback, useState } from "react";
 import { debounce } from "lodash";
+import FilterInput from "@/components/FilterInput";
 
 // Página principal onde se encontra grande parte
 // do conteúdo da aplicação
@@ -65,6 +66,10 @@ export default function Home() {
       <Content>
         <Flex backgroundColor="green" justifyContent="center" padding={2}>
           <SearchInput onChange={handleSearchInput} />
+        </Flex>
+
+        <Flex backgroundColor="salmon" justifyContent="center" padding={2}>
+          <FilterInput />
         </Flex>
 
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap="5px">
