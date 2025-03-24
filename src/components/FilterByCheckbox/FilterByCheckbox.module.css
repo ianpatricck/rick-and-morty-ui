@@ -1,0 +1,10 @@
+.filter {
+  font-family: "Montserrat";
+  color: var(--foreground);
+  font-size: 10pt;
+}
+
+.checkbox {
+  background-color: transparent;
+  border: 1.5px solid var(--foreground);
+}
