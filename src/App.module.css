@@ -1,0 +1,17 @@
+:root {
+  --background: hsl(243 69% 99%);
+  --foreground: hsl(252 69% 69%);
+  --secondary: hsl(243 69% 95%);
+  --lightgray: hsl(353 76% 98%);
+  --success: hsl(123 71% 57%);
+  --danger: hsl(6 71% 57%);
+}
+
+body {
+  background-color: var(--background);
+}
+
+@font-face {
+  src: url(/Montserrat-Medium.woff);
+  font-family: "Montserrat";
+}
