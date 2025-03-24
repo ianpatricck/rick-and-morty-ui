@@ -8,7 +8,7 @@ type ContentProps = {
 // Componente que encapsula o conteúdo principal das páginas
 export default function Content({ children }: ContentProps) {
   return (
-    <Container maxW="80vw" backgroundColor="red">
+    <Container maxW="80vw">
       {children}
     </Container>
   );
