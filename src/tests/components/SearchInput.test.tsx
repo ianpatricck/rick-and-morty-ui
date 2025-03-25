@@ -5,7 +5,7 @@ import { render } from "../customRender";
 describe("SearchInput component", () => {
   it("renders correctly with the provided label", () => {
     render(<SearchInput />);
-    const inputElement = screen.getByText(/Buscar personagem/i);
+    const inputElement = screen.getByText(/Search characters/i);
     expect(inputElement).toBeInTheDocument();
   });
 
