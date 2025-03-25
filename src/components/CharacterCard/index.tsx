@@ -32,9 +32,9 @@ export default function CharacterCard({
       </Flex>
 
       <Card.Body mt={3}>
-        <Flex justifyContent="space-between">
-          <Card.Title>{name}</Card.Title>
-          <Text fontSize={11} color="var(--foreground)">
+        <Flex justifyContent="space-between" alignItems="center">
+          <Card.Title fontSize="sm" maxW="50%" lineClamp="1">{name}</Card.Title>
+          <Text fontSize={11} color="var(--foreground)" textAlign="right">
             {species}
           </Text>
         </Flex>
