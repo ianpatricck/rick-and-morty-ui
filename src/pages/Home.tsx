@@ -115,7 +115,7 @@ export default function Home() {
             </Text>
           ) : (
             <Text fontFamily="Montserrat" fontSize="sm" mt={5}>
-              Total: {characters.info.count}
+              {!isError ? <>Total: {characters.info.count}</> : null}
             </Text>
           )}
         </Flex>
@@ -133,8 +133,8 @@ export default function Home() {
               )}
             </>
           ) : isError ? (
-            <Heading margin={4} background="gray">
-              Personagens não encontrados.
+            <Heading margin={4} size="xl" color="var(--foreground)">
+              Character not found.
             </Heading>
           ) : (
             <Fragment>
