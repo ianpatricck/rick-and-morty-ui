@@ -6,6 +6,7 @@ import {
   PaginationRootProps,
 } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import PaginationModule from "./Pagination.module.css";
 
 // Componente de paginação que fornece usabilidade ao usuário
 // ao navegar pelos itens dos personagens.
@@ -13,10 +14,14 @@ export default function Pagination(props: PaginationRootProps) {
   const screenSize = useWindowScreen();
 
   return (
-    <ChakraPagination.Root marginTop={2} backgroundColor="dimgray" {...props}>
+    <ChakraPagination.Root
+      marginTop={2}
+      {...props}
+      className={PaginationModule.pagination}
+    >
       <ButtonGroup variant="ghost" size={{ base: "xs", sm: "sm", md: "md" }}>
         <ChakraPagination.PrevTrigger asChild>
-          <IconButton>
+          <IconButton color="black">
             <LuChevronLeft />
           </IconButton>
         </ChakraPagination.PrevTrigger>
@@ -26,7 +31,7 @@ export default function Pagination(props: PaginationRootProps) {
         ) : (
           <ChakraPagination.Items
             render={(page) => (
-              <IconButton variant={{ base: "ghost", _selected: "outline" }}>
+              <IconButton variant={{ base: "outline", _selected: "solid" }}>
                 {page.value}
               </IconButton>
             )}
@@ -34,7 +39,7 @@ export default function Pagination(props: PaginationRootProps) {
         )}
 
         <ChakraPagination.NextTrigger asChild>
-          <IconButton>
+          <IconButton color="black">
             <LuChevronRight />
           </IconButton>
         </ChakraPagination.NextTrigger>
