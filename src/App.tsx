@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import Home from "@/pages/Home";
 import PageNotFound from "@/pages/PageNotFound";
 import Character from "@/pages/Character";
+import "./App.module.css";
 
 // Entrypoint do projeto, o componente principal.
 export default function App() {
