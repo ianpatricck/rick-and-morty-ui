@@ -4,16 +4,16 @@ import SearchInputModule from "./SearchInput.module.css";
 // Campo de busca dos personagens
 export default function SearchInput(props: InputProps) {
   return (
-    <Field.Root w="2xl">
-      <Group attached w="full" className={SearchInputModule.input_group}>
-        <Input
-          className="peer"
-          placeholder=""
-          {...props}
-        />
+    <Field.Root>
+      <Group
+        attached
+        w={{ base: "full", sm: "full", xl: "2xl" }}
+        className={SearchInputModule.input_group}
+      >
+        <Input className="peer" placeholder="" {...props} />
         <Field.Label
           css={floatingStyles}
-          fontSize={{ base: "10pt", sm: "sm", md: "md" }}
+          fontSize={{ base: "10pt", sm: "sm", md: "sm" }}
         >
           Search characters
         </Field.Label>
