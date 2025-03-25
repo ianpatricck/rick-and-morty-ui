@@ -1,6 +1,13 @@
 import { useParams } from "react-router";
 import Content from "./layouts/Content";
-import { Box, Flex, Heading, Image, Skeleton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  DataList,
+  Flex,
+  Heading,
+  Image,
+  Skeleton,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/services/api";
 
@@ -18,19 +25,15 @@ export default function Character() {
     queryFn: () => fetchData("/character/" + id),
   });
 
-  // Exibe uma mensagem de erro no console.
-  if (isError) {
-    console.error(isError);
-  }
-
   return (
-    <Flex justifyContent="center" padding={25} backgroundColor="blue" h="100vh">
+    <Flex justifyContent="center" padding={25} h="100vh">
       <Content>
         <Flex
           direction={{ base: "column", md: "row" }}
           margin={10}
-          backgroundColor="green"
           rounded="lg"
+          backgroundColor="white"
+          boxShadow="md"
         >
           {isPending ? (
             <Skeleton
@@ -42,41 +45,64 @@ export default function Character() {
               }}
               width="100%"
             />
+          ) : isError ? (
+            <Heading color="var(--foreground)" p={5}>
+              Character not found :(
+            </Heading>
           ) : (
             <>
-              <Flex
-                backgroundColor="brown"
-                justifyContent="center"
-                padding={{ base: 2, sm: 2, md: 0 }}
-              >
+              <Flex justifyContent="center" padding={{ base: 2, sm: 2, md: 0 }}>
                 <Image
                   src={character.image}
                   alt={character.name}
                   height={{
                     base: "150px",
                     sm: "200px",
-                    md: "300px",
-                    lg: "300px",
                   }}
                   width={{
                     base: "150px",
                     sm: "200px",
-                    md: "300px",
-                    lg: "300px",
                   }}
                   rounded={{ base: "full" }}
-                  roundedTopRight={{ md: "none" }}
-                  roundedBottomRight={{ md: "none" }}
-                  roundedBottomLeft={{ md: "lg" }}
-                  roundedTopLeft={{ md: "lg" }}
+                  margin={5}
                 />
               </Flex>
 
-              <Box margin={2}>
-                <Heading>Name: {character.name}</Heading>
-                <Text>Status: {character.status}</Text>
-                <Text>Epsodes: {character.episode.length}</Text>
-                <Text>Location: {character.location.name}</Text>
+              <Box margin={3}>
+                <Heading size="xl">{character.name}</Heading>
+
+                <DataList.Root mt={3}>
+                  <DataList.Item>
+                    <DataList.ItemLabel>Status</DataList.ItemLabel>
+                    <DataList.ItemValue>{character.status}</DataList.ItemValue>
+                  </DataList.Item>
+
+                  <DataList.Item>
+                    <DataList.ItemLabel>Gender</DataList.ItemLabel>
+                    <DataList.ItemValue>{character.gender}</DataList.ItemValue>
+                  </DataList.Item>
+
+                  <DataList.Item>
+                    <DataList.ItemLabel>Episodes</DataList.ItemLabel>
+                    <DataList.ItemValue>
+                      {character.episode.length}
+                    </DataList.ItemValue>
+                  </DataList.Item>
+
+                  <DataList.Item>
+                    <DataList.ItemLabel>Location</DataList.ItemLabel>
+                    <DataList.ItemValue>
+                      {character.location.name}
+                    </DataList.ItemValue>
+                  </DataList.Item>
+
+                  <DataList.Item>
+                    <DataList.ItemLabel>Origin</DataList.ItemLabel>
+                    <DataList.ItemValue>
+                      {character.origin.name}
+                    </DataList.ItemValue>
+                  </DataList.Item>
+                </DataList.Root>
               </Box>
             </>
           )}
