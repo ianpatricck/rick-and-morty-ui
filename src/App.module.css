@@ -10,8 +10,3 @@
 body {
   background-color: var(--background);
 }
-
-@font-face {
-  src: url(/Montserrat-Medium.woff);
-  font-family: "Montserrat";
-}

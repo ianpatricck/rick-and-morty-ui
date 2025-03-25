@@ -3,6 +3,11 @@
    License: none (public domain)
 */
 
+@font-face {
+  src: url(/Montserrat-Medium.woff);
+  font-family: "Montserrat";
+}
+
 html,
 body,
 div,
@@ -86,6 +91,7 @@ audio,
 video {
   margin: 0;
   padding: 0;
+  font-family: "Montserrat";
   border: 0;
   vertical-align: baseline;
 }
