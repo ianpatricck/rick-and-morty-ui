@@ -1,4 +1,5 @@
 import { Card, Flex, Image, Text } from "@chakra-ui/react";
+import CharacterCardModule from "./CharacterCard.module.css";
 
 type CharacterCardProps = {
   image: string;
@@ -19,22 +20,49 @@ export default function CharacterCard({
 }: CharacterCardProps) {
   return (
     <Card.Root
+      className={CharacterCardModule.card}
+      boxShadow="md"
+      _hover={{ boxShadow: "2xl", backgroundColor: "var(--lightgray)" }}
       maxWidth="sm"
       overflow="hidden"
-      backgroundColor="gray"
       padding={2}
     >
-      <Flex backgroundColor="yellow" justifyContent="center">
+      <Flex justifyContent="center">
         <Image src={image} alt={name} borderRadius="full" boxSize="150px" />
       </Flex>
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-        <Text>{status}</Text>
-        <Text>{species}</Text>
+
+      <Card.Body mt={3}>
+        <Flex justifyContent="space-between">
+          <Card.Title>{name}</Card.Title>
+          <Text fontSize={11} color="var(--foreground)">
+            {species}
+          </Text>
+        </Flex>
       </Card.Body>
 
-      <Card.Footer>
-        <Text>{gender}</Text>
+      <Card.Footer mt={3}>
+        <Text
+          color="var(--foreground)"
+          border=".12em solid var(--foreground)"
+          borderRadius={2}
+          p={2.1}
+        >
+          {gender}
+        </Text>
+        <Text
+          color="white"
+          backgroundColor={
+            status == "Alive"
+              ? "var(--success)"
+              : status == "Dead"
+                ? "var(--danger)"
+                : "dimgray"
+          }
+          p={2.1}
+          borderRadius={2}
+        >
+          {status}
+        </Text>
       </Card.Footer>
     </Card.Root>
   );
