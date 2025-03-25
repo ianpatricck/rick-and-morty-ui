@@ -1,16 +1,23 @@
 import SearchInput from "@/components/SearchInput";
 import Content from "./layouts/Content";
-import { Flex, Heading, SimpleGrid, Skeleton, Stack } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import CharacterCard from "@/components/CharacterCard";
 import Pagination from "@/components/Pagination";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/services/api";
 import { CharacterSchema } from "@/schemas/CharacterSchema";
 import { Link } from "react-router";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, Fragment, useCallback, useState } from "react";
 import { debounce } from "lodash";
-import FilterByCheckbox from "@/components/FilterByCheckbox";
 import { formatSearchCharactersQuery } from "@/utils/formatSearchCharactersQuery";
+import Select from "@/components/Select";
 
 // Página principal onde se encontra grande parte
 // do conteúdo da aplicação
@@ -31,8 +38,8 @@ export default function Home() {
   );
 
   // Armazena os estados dos filtros para busca
-  const [checkedStatus, setCheckedStatus] = useState<Array<string>>([]);
-  const [checkedGender, setCheckedGender] = useState<Array<string>>([]);
+  const [checkedStatus, setCheckedStatus] = useState<string | null>(null);
+  const [checkedGender, setCheckedGender] = useState<string | null>(null);
 
   // Utiliza o react-query para fazer uma requisição à API.
   const {
@@ -69,37 +76,51 @@ export default function Home() {
   };
 
   return (
-    <Flex
-      direction="column"
-      alignItems="center"
-      backgroundColor="blue"
-      padding={10}
-    >
+    <Flex direction="column" alignItems="center" padding={10}>
       {/*Armazena todo o conteúdo da Home*/}
       <Content>
-        <Flex backgroundColor="green" justifyContent="center" padding={2}>
+        <Flex direction="column" alignItems="right" padding={2}>
           <SearchInput onChange={handleSearchInput} />
+
+          <Flex direction={{ base: "column", md: "row", xl: "row" }}>
+            <Select
+              placeholder="Status"
+              onChange={setCheckedStatus}
+              setPage={setPage}
+              data={[
+                { label: "Empty", value: "" },
+                { label: "Alive", value: "alive" },
+                { label: "Dead", value: "dead" },
+                { label: "Unknown", value: "unknwon" },
+              ]}
+            />
+
+            <Select
+              placeholder="Gender"
+              onChange={setCheckedGender}
+              setPage={setPage}
+              data={[
+                { label: "Empty", value: "" },
+                { label: "Female", value: "female" },
+                { label: "Male", value: "male" },
+                { label: "Genderless", value: "genderless" },
+                { label: "Unknown", value: "unknwon" },
+              ]}
+            />
+          </Flex>
+
+          {isPending ? (
+            <Text fontFamily="Montserrat" fontSize="sm" mt={5}>
+              Total: loading...
+            </Text>
+          ) : (
+            <Text fontFamily="Montserrat" fontSize="sm" mt={5}>
+              Total: {characters.info.count}
+            </Text>
+          )}
         </Flex>
 
-        <Flex backgroundColor="salmon" justifyContent="center" padding={2}>
-          <FilterByCheckbox
-            statusList={[
-              { index: "alive", value: "Alive" },
-              { index: "dead", value: "Dead" },
-              { index: "unknown", value: "Unknown" },
-            ]}
-            genderList={[
-              { index: "female", value: "Female" },
-              { index: "male", value: "Male" },
-              { index: "genderless", value: "Genderless" },
-              { index: "unknown", value: "Unknown" },
-            ]}
-            states={{ checkedStatus, checkedGender }}
-            setStates={{ setCheckedStatus, setCheckedGender, setPage }}
-          />
-        </Flex>
-
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap="5px">
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap="5px" mt={8}>
           {/*Verifica se a requisição ainda está pendente. Caso sim, mostra o Skeleton Loading.*/}
           {isPending || isFetching ? (
             <>
@@ -116,7 +137,7 @@ export default function Home() {
               Personagens não encontrados.
             </Heading>
           ) : (
-            <>
+            <Fragment>
               {characters?.results.map(
                 (character: CharacterSchema, key: number) => (
                   <Link to={"/character/" + character.id} key={key}>
@@ -130,7 +151,7 @@ export default function Home() {
                   </Link>
                 ),
               )}
-            </>
+            </Fragment>
           )}
         </SimpleGrid>
       </Content>
